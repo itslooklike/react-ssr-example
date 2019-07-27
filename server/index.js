@@ -13,8 +13,13 @@ app.use(express.static('build'))
 app.get('*', (req, response) => {
   const { path } = req
   const store = createStore()
-  matchRoutes(routes, path).map(({ route }) => (route.loadData ? route.loadData() : null))
-  response.send(renderer(path, store))
+  const promises = matchRoutes(routes, path).map(({ route }) =>
+    route.loadData ? route.loadData(store) : null
+  )
+
+  Promise.all(promises)
+    .then(() => response.send(renderer(path, store)))
+    .catch(err => console.log(err))
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
