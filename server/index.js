@@ -1,6 +1,7 @@
 import '@babel/polyfill'
 
 import express from 'express'
+import morgan from 'morgan'
 import { matchRoutes } from 'react-router-config'
 import proxy from 'express-http-proxy'
 
@@ -11,6 +12,8 @@ import createStore from './helpers/create-store'
 const port = 3000
 
 const app = express()
+
+app.use(morgan('tiny'))
 
 app.use(
   '/api',
