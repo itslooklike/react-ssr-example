@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function About({ name }) {
+function About({ name }) {
   const [value, setValue] = React.useState(0)
   const increment = () => setValue(value + 1)
   return (
@@ -14,4 +14,8 @@ export default function About({ name }) {
       </div>
     </div>
   )
+}
+
+export default {
+  component: About,
 }

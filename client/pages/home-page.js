@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchUsers } from './actions'
+import { fetchUsers } from '../actions'
 
 function Home(props) {
   const { users, fetchUsers } = props
 
   useEffect(() => {
-    fetchUsers()
-  }, [fetchUsers])
+    if (users.length === 0) fetchUsers()
+  }, [fetchUsers, users.length])
 
   return (
     <div>
@@ -29,7 +29,7 @@ function Home(props) {
   )
 }
 
-export function loadData(store) {
+function loadData(store) {
   return store.dispatch(fetchUsers())
 }
 
@@ -37,7 +37,10 @@ function mapStateToProps(state) {
   return { users: state.users }
 }
 
-export default connect(
-  mapStateToProps,
-  { fetchUsers }
-)(Home)
+export default {
+  loadData,
+  component: connect(
+    mapStateToProps,
+    { fetchUsers }
+  )(Home),
+}

@@ -1,8 +1,8 @@
 // import React from 'react'
 // import { Route } from 'react-router-dom'
 
-import Home, { loadData } from './home'
-import About from './about'
+import HomePage from './pages/home-page'
+import AboutPage from './pages/about-page'
 
 // export default function Routes() {
 //   return (
@@ -12,15 +12,15 @@ import About from './about'
 //     </div>
 //   )
 // }
+
 export default [
   {
+    ...HomePage,
     path: '/',
-    component: Home,
     exact: true,
-    loadData,
   },
   {
+    ...AboutPage,
     path: '/about',
-    component: About,
   },
 ]
