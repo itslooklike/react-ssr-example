@@ -8,5 +8,8 @@ module.exports = {
   output: {
     filename: 'bundle.server.js',
   },
+  optimization: {
+    minimize: false,
+  },
   ...config,
 }
