@@ -11,23 +11,22 @@ import createStore from './helpers/create-store'
 
 const port = 3000
 
+const proxyOptions = {
+  proxyReqOptDecorator(opts) {
+    opts.headers['x-forwarded-host'] = 'localhost:3000'
+    return opts
+  },
+}
+
 const app = express()
 
 app.use(morgan('tiny'))
 
-app.use(
-  '/api',
-  proxy('http://react-ssr-api.herokuapp.com', {
-    proxyReqOptDecorator(opts) {
-      opts.headers['x-forwarded-host'] = 'localhost:3000'
-      return opts
-    },
-  })
-)
+app.use('/api', proxy('http://react-ssr-api.herokuapp.com', proxyOptions))
 
 app.use(express.static('build'))
 
-app.get('*', (req, response) => {
+app.get('*', (req, res) => {
   const { path } = req
   const store = createStore(req.get('cookie') || '')
   const promises = matchRoutes(routes, path).map(({ route }) =>
@@ -35,7 +34,16 @@ app.get('*', (req, response) => {
   )
 
   Promise.all(promises)
-    .then(() => response.send(renderer(path, store)))
+    .then(() => {
+      const context = {}
+      const content = renderer(path, store, context)
+
+      if (context.notFound) {
+        res.status(404)
+      }
+
+      res.send(content)
+    })
     .catch(error => console.log(error))
 })
 

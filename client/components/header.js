@@ -16,6 +16,7 @@ export default function Header() {
       <nav>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
+        <Link to="/nonononononono">Not Exist Page</Link>
         <button type="button" onClick={() => dispatch(fetchCurrentUser())}>
           Try Reauth
         </button>
