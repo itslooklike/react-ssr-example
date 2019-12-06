@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function About({ name }) {
-  const [value, setValue] = React.useState(0)
-  const increment = () => setValue(value + 1)
+  const [value, setValue] = useState(0)
+  const increment = () => setValue(prev => prev + 1)
   return (
     <div>
       <div>About page {name}</div>
