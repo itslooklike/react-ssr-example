@@ -1,20 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUsers } from '../actions'
 
 function Home() {
   const dispatch = useDispatch()
   const users = useSelector(({ users }) => users)
+  const getUsers = useCallback(() => {
+    dispatch(fetchUsers())
+  }, [])
 
   useEffect(() => {
-    if (users.length === 0) dispatch(fetchUsers())
+    if (users.length === 0) getUsers()
   }, [])
 
   return (
     <div>
       <div>Hello</div>
       <div>
-        <button type="button" onClick={fetchUsers}>
+        <button type="button" onClick={getUsers}>
           fetch
         </button>
       </div>

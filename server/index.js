@@ -44,7 +44,7 @@ app.get('*', (req, res) => {
 
       res.send(content)
     })
-    .catch(error => console.log(error))
+    .catch(error => console.log('🛑', error))
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
