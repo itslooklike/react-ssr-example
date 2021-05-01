@@ -1,6 +1,6 @@
 const nodeExternals = require('webpack-node-externals')
-
 const config = require('./webpack.common')
+
 module.exports = {
   target: 'node',
   externals: [nodeExternals()],

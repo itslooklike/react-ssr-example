@@ -1,7 +1,7 @@
-# SSR
+# Custom React SSR example
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 http://localhost:3000/
